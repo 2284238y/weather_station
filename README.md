@@ -35,5 +35,3 @@ Note: See the [data acquisition/processing and GUI folder](02_data_processing_an
 
 ### Web App <a name="web"></a>
 Note: See the [web app folder](03_web_app)
-
-test
