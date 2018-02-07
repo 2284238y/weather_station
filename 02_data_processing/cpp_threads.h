@@ -8,7 +8,7 @@ class CppThreads{
         void Create();
         static void* Exec(void* arg);
         void Run();
-        // void* Join();
+        void Join();
     private:
         static int num;
         pthread_t id;

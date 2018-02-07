@@ -1,5 +1,4 @@
 #include <iostream>
-//#include <linux/i2c-dev.h>
 #include "cpp_threads.h"
 
 using namespace std;
