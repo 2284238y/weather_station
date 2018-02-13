@@ -1,19 +1,19 @@
 SHELL = /bin/bash
 
-.SUFFIXES:
-.SUFFIXES: .c .o
-
-CXX = g++ -std=c++11
+CXX = g++ -std=c++17
 CXXFLAGS = -Wall -g -pthread
 
-output: main.o cpp_threads.o
-	$(CXX) $(CXXFLAGS) main.o cpp_threads.o -o output
+objects = main.o threads.o
 
-main.o: cpp_threads.h
+output: $(objects)
+	$(CXX) $(CXXFLAGS) main.o threads.o -o output
+
+main.o : threads.h
 	$(CXX) $(CXXFLAGS) -c main.cpp
 
-cpp_threads.o: cpp_threads.h
-	$(CXX) $(CXXFLAGS) -c cpp_threads.cpp
+threads.o : threads.h
+	$(CXX) $(CXXFLAGS) -c threads.cpp
 
-clean:
-	rm *.o output
+.PHONY : clean
+clean :
+	rm $(objects) output
