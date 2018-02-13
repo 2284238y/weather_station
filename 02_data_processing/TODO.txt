@@ -1,4 +1,0 @@
-1. Figure out how to get data from i2c
-2. Figure out method of processing data (pen and paper)
-3. Implement processing of data
-4. Implement Threading
