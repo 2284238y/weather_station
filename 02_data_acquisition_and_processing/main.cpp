@@ -15,9 +15,7 @@ int main() {
     Work broadcast_data("write");
 
     get_data.create();
-    sleep(2);
     process_data.create();
-    sleep(2);
     broadcast_data.create();
 
     get_data.join();
