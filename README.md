@@ -1,6 +1,6 @@
 # Team 2 - Weather Station
 
-This real-time local weather station project utilises a Raspberry Pi 3, off-the-shelf I2C sensors, a custom built PCB and a graphical display unit (a computer in this situation). The data acquisition, data processing and GUI is all coded in c++ and the web app display runs on an Apache server (on the Raspberry Pi) and is coded in PHP, using a MySQL database. Communication between c++ and PHP is done using the UDP protocol.
+This real-time local weather station project utilises a Raspberry Pi 3, off-the-shelf I2C sensors and a custom built PCB. Dat can be accessed online in a web app run on an Apache server (the Raspberry Pi). The data acquisition and data processing is written in c++ and the web app display is written in PHP, using a MySQL database.
 
 Contributers:
 * [Aurelie Crawford](https://github.com/acra6488/)
@@ -29,8 +29,8 @@ Note: See the [electronics folder](01_electronics)
 
 
 ## Installation <a name="install"></a>
-### Data Acquisition, Data Analysis and GUI <a name="data"></a>
-Note: See the [data acquisition/processing and GUI folder](02_data_processing_and_gui)
+### Data Acquisition and Data Analysis <a name="data"></a>
+Note: See the [data acquisition/processing folder](02_data_acquisition_and_processing)
 
 
 ### Web App <a name="web"></a>
