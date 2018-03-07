@@ -6,20 +6,22 @@ extern "C" {
 }
 #include <cstdlib>
 #include <iostream>
-#include "threads.h"
-
-using namespace std;
+#include <string>
+#include "work.h"
 
 int main() {
-    Threads get_data;
-    Threads process_data;
-    Threads broadcast_data;
+    Work get_data("get");
+    Work process_data("process");
+    Work broadcast_data("write");
+
     get_data.create();
+    sleep(2);
     process_data.create();
-    broadcast_data.create();
-    get_data.join();
-    process_data.join();
+    sleep(2);
     broadcast_data.create();
 
+    get_data.join();
+    process_data.join();
+    broadcast_data.join();
 
 }

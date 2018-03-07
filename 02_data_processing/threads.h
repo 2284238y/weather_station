@@ -1,19 +1,16 @@
 #ifndef THREADS_H
 #define THREADS_H
 
-#include "work.h"
-
 class Threads{
     public:
         Threads();
         virtual ~Threads();
-        static void* exec(void* object);
         void create();
-        void run();
+        virtual void run();
         void join();
     private:
-        static int s_num;
-        pthread_t m_id;
+        static void* exec(void* object);
+        pthread_t id;
 };
 
 #endif // THREADS_H

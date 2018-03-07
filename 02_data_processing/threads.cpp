@@ -3,47 +3,32 @@ extern "C" {
 }
 #include <iostream>
 #include "threads.h"
-#include "work.h"
 
-using namespace std;
 
 // Constructors and Destructors
-Threads::Threads() {
-    m_id = s_num++;
-    cout << "Thread " << m_id << " created..." << endl;
-}
+Threads::Threads() {}
 
 Threads::~Threads() {}
 
-// Static variables and functions
-int Threads::s_num = 0;
+// Static functions
 
 void* Threads::exec(void* object) {
-    ((Threads *)object)-> run(); //Ask if this is better?
+    ((Threads*)object)-> run();
     return 0;
 }
 
 // Non-static functions
 void Threads::create() {
+  //std::cout << "Creating thread " << id << "..." << std::endl;
     int ret;
-    if ((ret = pthread_create(&m_id, 0, &Threads::exec, this)) != 0) {
-        throw "Failed to create thread)";
+    if ((ret = pthread_create(&id,0,&Threads::exec,this) != 0)) {
+        throw "Cannot create thread";
     }
 }
 
-void Threads::run() {
-    if (m_id == 0) {
-        cout << "hello1" << endl;
-        work_get_data();
-    } else if (m_id == 1) {
-        cout << "hello2" << endl;
-        work_process_data();
-    } else if (m_id == 2) {
-        cout << "hello3" << endl;
-        work_broadcast_data();
-    }
-}
+void Threads::run() {}
 
 void Threads::join() {
-    pthread_join(m_id, NULL);
+    pthread_join(id,0);
+    //std::cout << "Thread " << id << " joined" << std::endl;
 }
