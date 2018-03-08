@@ -1,12 +1,5 @@
-extern "C" {
-    #include <fcntl.h>
-    #include <linux/i2c-dev.h>
-    #include <sys/ioctl.h>
-    #include <unistd.h>
-}
 #include <cstdlib>
 #include <iostream>
-#include <string>
 #include "work.h"
 
 int main() {
