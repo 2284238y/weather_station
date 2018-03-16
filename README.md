@@ -24,9 +24,18 @@ Contributers:
 
 
 ### Electronics <a name="electro"></a>
-Note: See the [electronics folder](01_electronics)
+The hardware consists in a Raspberry PI 3 and two custom made printed circuit boards (PCBs) that use i2c components. One of the circuit boards is kept locally with the Raspberry PI. The second one is placed outside to do the weather measurements. The first board is therefore called "local enclosure". The second "remote enclosure". A 10-meter-long ethernet cable connects the two boards.
 
+The components are listed here:
 
+P82B96TD,112 the level shifter on both circuits (remote enclosure/outside and “main/local enclosure”/inside)
+HIH6030-021-001 the humidity and temperature sensor, on the remote circuit (to be placed outside)
+MPL3115A2 the atmospheric pressure sensor, on the remote circuit
+1-406541-5 the RJ45 Ethernet connector plug, on both circuits
+the GPIO header: all pins will be soldered to the homemade board for better stability when the homemade board is plugged into the Raspberry PI, but only 4 of the connections are live: ground, voltage, clock and data (i2c protocol).
+
+For more details see the Wiki Hardware page.
+Note: See the [electronics folder](01_electronics) for pictures and downloadable circuit and CAD files.
 
 ## Installation <a name="install"></a>
 ### Data Acquisition and Data Analysis <a name="data"></a>
