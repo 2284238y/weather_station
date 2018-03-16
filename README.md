@@ -28,11 +28,15 @@ The hardware consists in a Raspberry PI 3 and two custom made printed circuit bo
 
 The components are listed here:
 
-P82B96TD,112 the level shifter on both circuits (remote enclosure/outside and “main/local enclosure”/inside)
-HIH6030-021-001 the humidity and temperature sensor, on the remote circuit (to be placed outside)
-MPL3115A2 the atmospheric pressure sensor, on the remote circuit
-1-406541-5 the RJ45 Ethernet connector plug, on both circuits
-the GPIO header: all pins will be soldered to the homemade board for better stability when the homemade board is plugged into the Raspberry PI, but only 4 of the connections are live: ground, voltage, clock and data (i2c protocol).
+- P82B96TD,112 the level shifter on both circuits (remote enclosure/outside and “main/local enclosure”/inside)
+
+- HIH6030-021-001 the humidity and temperature sensor, on the remote circuit (to be placed outside)
+
+- MPL3115A2 the atmospheric pressure sensor, on the remote circuit
+
+- 1-406541-5 the RJ45 Ethernet connector plug, on both circuits
+
+- GPIO header: all pins will be soldered to the homemade board for better stability when the homemade board is plugged into the Raspberry PI, but only 4 of the connections are live: ground, voltage, clock and data (i2c protocol).
 
 For more details on electronics, design and soldering, see the Wiki Hardware page.
 
