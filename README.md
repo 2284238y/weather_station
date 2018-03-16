@@ -22,6 +22,10 @@ Contributers:
 ## Getting Started <a name="start"></a>
 ### Raspberry Pi Setup <a name="raspi"></a>
 
+We have made a homemade board that sits right on top of the Raspberry PI, that is connected to it via the GPIO interface, and kept snuggly tight with 4 M2.5 mounting screws. A second board with the sensors is placed outside and connected to the Raspberry PI with a 10-meter long RJ45 (ethernet) cable.
+See our Twitter feed for pictures.
+@glasgoweatherpi
+https://twitter.com/glasgoweatherpi
 
 ### Electronics <a name="electro"></a>
 The hardware consists in a Raspberry PI 3 and two custom made printed circuit boards (PCBs) that use i2c components. One of the circuit boards is kept locally with the Raspberry PI. The second one is placed outside to do the weather measurements. The first board is therefore called "local enclosure". The second "remote enclosure". A 10-meter-long ethernet cable connects the two boards.
