@@ -16,7 +16,7 @@ Contributers:
 2. [Installation](#install)
    1. [Data Acquisition, Data Analysis and GUI](#data)
    2. [Wep App](#web)
-
+3. [Social engagement: Twitter and YouTube](#social)
 
 
 ## Getting Started <a name="start"></a>
@@ -49,3 +49,12 @@ Note: See the [data acquisition/processing folder](02_data_acquisition_and_proce
 
 ### Web App <a name="web"></a>
 Note: See the [web app folder](03_web_app)
+
+## Social engagement <a name="social"></a>
+### Twitter
+@glasgoweatherpi
+https://twitter.com/glasgoweatherpi
+
+### YouTube
+https://www.youtube.com/channel/UC4opVTRY-T7hGgP9xzcyDQA?view_as=subscriber
+Note: See the [social_engagement folder](social_engagement)
