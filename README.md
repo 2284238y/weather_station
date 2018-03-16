@@ -23,11 +23,14 @@ Contributers:
 
 We are creating a conveninent way to remotely track basic weather data (humidity, temperature and pressure) using a Raspberry Pi. The system can be used as a universal condition monitoring system. Ready-made solutions can be expensive or won't do exactly what we want. 
 Our solution is programmable by the user and cheap to be manufactured by someone else reading this page. The 4 i2c sensors used had a cost of about £5.
+
 The Raspberry PI code is written in C++. The data received by the sensors is fomatted into a MySQL database every 5 seconds. 
+
 The web server is coded in PHP. The graphics user interface has real-time schematics and uses googles graphic tools. It is available on any device via http protocol. 
+
 It is possible to configure email alerts for when a fast or large variation of the weather is detected.
 
-Insert project schematic
+INSERT PROJECT SCHEMATIC
 
 ## Getting Started <a name="start"></a>
 ### Raspberry Pi Setup <a name="raspi"></a>
