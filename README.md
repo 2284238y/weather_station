@@ -1,4 +1,4 @@
-# Team 2 - Weather Station
+# Raspberry Pi Weather Station
 
 This real-time local weather station project utilises a Raspberry Pi 3, off-the-shelf I2C sensors and a custom built PCB using MultiSim (National Instruments) for the circuit design and Ultiboard (National Instruments) for the PCB design. Data can be accessed online in a web app run on an Apache server (the Raspberry Pi). The data acquisition and data processing is written in C++ and the web app display is written in PHP, using a MySQL database.
 
