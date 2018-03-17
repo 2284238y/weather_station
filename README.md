@@ -3,9 +3,9 @@
 This real-time local weather station project utilises a Raspberry Pi 3, off-the-shelf I2C sensors and a custom built PCB using MultiSim (National Instruments) for the circuit design and Ultiboard (National Instruments) for the PCB design. Data can be accessed online in a web app run on an Apache server (the Raspberry Pi). The data acquisition and data processing is written in C++ and the web app display is written in PHP, using a MySQL database.
 
 Contributers:
-* [Aurelie Crawford](https://github.com/acra6488/)
-* [Craig McCallum](https://github.com/craigmccallum/)
-* [Damir Gulamov](https://github.com/damir2020/)
+* [Aurelie Crawford](https://github.com/acra6488/) - Electronics
+* [Craig McCallum](https://github.com/craigmccallum/) - Data Acquisition and Processing
+* [Damir Gulamov](https://github.com/damir2020/) - Web App Display
 
 
 
@@ -30,7 +30,7 @@ The web server is coded in PHP. The graphics user interface has real-time schema
 
 It is possible to configure email alerts for when a fast or large variation of the weather is detected.
 
-INSERT PROJECT SCHEMATIC
+![alt text](social_engagement/project-schematic.PNG)
 
 ## Getting Started <a name="start"></a>
 ### Raspberry Pi Setup <a name="raspi"></a>
