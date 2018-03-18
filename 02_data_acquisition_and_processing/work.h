@@ -11,16 +11,14 @@ class Work : public Threads {
 	void run() override;
  private:
 	std::string todo;
+	static double buff_hum[100];
 	static double buff_temp[100];
 	static double buff_pres[100];
-	static double buff_hum[100];
+	static double ave_hum;
 	static double ave_temp;
 	static double ave_pres;
-	static double ave_hum;
 	static std::string message;
 	static std::string current_weather;
-	static int flag_get;
-    static int flag_process;
     double sum_temp = 0, sum_pres = 0, sum_hum = 0;
 	int n_tph = 1;
 	int n_ring = 0;

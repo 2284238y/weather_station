@@ -11,16 +11,14 @@ extern "C" {
 
 #include "work.h"
 
+double Work::buff_hum[100] = {};
 double Work::buff_temp[100] = {};
 double Work::buff_pres[100] = {};
-double Work::buff_hum[100] = {};
+double Work::ave_hum = 0;
 double Work::ave_temp = 0;
 double Work::ave_pres = 0;
-double Work::ave_hum = 0;
 std::string Work::message = "Default";
 std::string Work::current_weather = "Default";
-int Work::flag_get = 0;
-int Work::flag_process = 0;
 
 Work::Work(std::string task) : todo(task) {}
 
@@ -37,7 +35,8 @@ void Work::run() {
 }
 
 void Work::Get() {
-	char buf[4];
+	uint8_t buf1[4];
+	uint8_t buf2[6];
 	int file;
 		
 	if((file = open("/dev/i2c-1", O_RDWR))< 0 ) {
@@ -46,22 +45,34 @@ void Work::Get() {
 	
 	while (1) {
 		if (ioctl(file,I2C_SLAVE,0x27)<0) {
-			std::cout << "cannot access address" << std::endl;
+			std::cout << "cannot access humidity/temperature sensor address" << std::endl;
 		};
 		
-		if(read(file,buf,4) != 4) {
-			std::cout << "Failure reading data" << std::endl;
+		if(read(file,buf1,4) != 4) {
+			std::cout << "Failure reading humidity/temperature data" << std::endl;
 		}
 
-        int read_temp = (buf[2] << 6) | (buf[3] >> 2);
-		double temperature = read_temp / 16382.0 * 165.0 - 40;
-		
-		int read_hum = (buf[0] << 10) | (buf[1] << 2);
-		read_hum = read_hum >> 2;
+		double read_hum = (buf1[0] << 8) | buf1[1];
 		double humidity = read_hum / 16382.0 * 100.0;
+
+        double read_temp = (buf1[2] << 6) | (buf1[3] >> 2);
+		double temperature = read_temp / 16382.0 * 165.0 - 40;    
 	
-		buff_temp[n_ring] = temperature;
 		buff_hum[n_ring] = humidity;
+		buff_temp[n_ring] = temperature;
+
+	    if (ioctl(file,I2C_SLAVE,0x60)<0) {
+			std::cout << "cannot access pressure sensor address" << std::endl;
+		}
+		
+		if(read(file,buf2,6) != 6) {
+			std::cout << "Problem reading pressure data" << std::endl;
+		}
+
+	    double read_pres = (buf2[1] << 16) | (buf2[2] << 8) | buf2[3];
+		double pressure = read_pres/6400000;
+
+		buff_pres[n_ring] = pressure;
 		
 		if (n_ring < 99) {
 			n_ring += 1;
@@ -73,8 +84,6 @@ void Work::Get() {
 			n_tph += 1;
 		}
 
-		flag_get = 1;
-
 		sleep(1);
 	}
 }
@@ -82,15 +91,18 @@ void Work::Get() {
 void Work::Process() {
 		while (1) {
 			for (int i = 0; i < n_tph; i++) {
-				sum_temp += buff_temp[i];
 				sum_hum += buff_hum[i];
+				sum_temp += buff_temp[i];
+				sum_pres += buff_pres[i];
 			}
 		  
-			ave_temp = sum_temp/n_tph;
 			ave_hum = sum_hum/n_tph;
+			ave_temp = sum_temp/n_tph;
+			ave_pres = sum_pres/n_tph;
 
-			sum_temp = 0;
 			sum_hum = 0;
+			sum_temp = 0;
+			sum_pres = 0;
 
 			if (ave_temp > 10) {
 				current_weather = "good";
@@ -104,18 +116,17 @@ void Work::Process() {
 				message = "It's bad weather, but have a great day anyway";
 			}
 
-			flag_process = 1;
-
 			sleep(5);
 	}
 }
 
 void Work::Write() {
 		while (1) {
-			std::cout << "Temperature is: " << ave_temp << std::endl;
-			std::cout << "Humidity is: " << ave_hum << std::endl;
+			std::cout << "Humidity: " << ave_hum <<  "%" << std::endl;
+			std::cout << "Temperature: " << ave_temp << " degrees C" << std::endl;
+			std::cout << "Pressure: " << ave_pres << " bar" << std::endl;
 
-			std::cout << "The current weather is: " << current_weather << std::endl;
+			std::cout << "Current weather : " << current_weather << std::endl;
 			std::cout << message << std::endl;
 
 			sleep(5);
