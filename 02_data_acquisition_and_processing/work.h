@@ -19,10 +19,11 @@ class Work : public Threads {
 	static double ave_hum;
 	static std::string message;
 	static std::string current_weather;
-	double read_temp_pres[20], read_temp[10], read_pres[10], read_hum[10];
-	double sum_temp = 0, sum_pres = 0, sum_hum = 0;
-	int n_tph = 10;
-	int n_ring = 10;
+	static int flag_get;
+    static int flag_process;
+    double sum_temp = 0, sum_pres = 0, sum_hum = 0;
+	int n_tph = 1;
+	int n_ring = 0;
 	void Get();
 	void Process();
 	void Write();

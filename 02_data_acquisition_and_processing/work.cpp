@@ -1,16 +1,13 @@
 extern "C" {
-    #include <fcntl.h>
-    #include <linux/i2c-dev.h>
-    #include <sys/ioctl.h>
-    #include <unistd.h>
+#include <fcntl.h>
+#include <linux/i2c-dev.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
 }
 
 #include <iostream>
-#include <string>
-
+#include <cstring>
 #include <cstdlib>
-
-#include <string>
 
 #include "work.h"
 
@@ -22,6 +19,8 @@ double Work::ave_pres = 0;
 double Work::ave_hum = 0;
 std::string Work::message = "Default";
 std::string Work::current_weather = "Default";
+int Work::flag_get = 0;
+int Work::flag_process = 0;
 
 Work::Work(std::string task) : todo(task) {}
 
@@ -29,121 +28,105 @@ Work::~Work() {}
 
 void Work::run() {
     if (todo == "get") {
-		//std::cout << "Getting data..." << std::endl;
 		Work::Get();
     } else if (todo == "process") {
-		//std::cout << "Processing data..." << std::endl;
 		Work::Process();
     } else if (todo == "write") {
-		//std::cout << "Writing data..." << std::endl;
 		Work::Write();
     }
 }
 
 void Work::Get() {
+	char buf[4];
+	int file;
+		
+	if((file = open("/dev/i2c-1", O_RDWR))< 0 ) {
+	    std::cout << "cannot open bus" << std::endl;
+	};
+	
 	while (1) {
-
-		// get t-p values
-		char test[10];
-		int bytes = 10;
-		int file = open("/dev/i2c-1",O_RDWR);
-		if (file<0) {
-		throw "Cannot open i2c bus";
+		if (ioctl(file,I2C_SLAVE,0x27)<0) {
+			std::cout << "cannot access address" << std::endl;
 		};
-		int address = 0x76;
-		if (ioctl(file,I2C_SLAVE,address)<0) {
-		throw "Cannot access address";
-		};
-		read(file,read_temp,bytes);
-		std::cout << test << std::endl;
-
-		/*
-		// get h values
-		int bytes = 10;
-		int file = open("/dev/i2c-?",O_RDWR);
-		if (file<0) {
-		throw "Cannot open i2c bus";
-		};
-		int address = 0x77;
-		if (ioctl(file,I2C_SLAVE,address)<0) {
-		throw "Cannot access address";
-		/};
-		read(file,read_hum,bytes);
-		std::cout << "hum: " << read_hum << stendl;
-
 		
-		  for (int i = 0; i < 10; i++) {
-		  int r = rand() % 15;
-		  read_temp[i] = r;
-		  read_pres[i] = 0.8*r;
-		  read_hum[i] = 0.2*r;
-		  }
+		if(read(file,buf,4) != 4) {
+			std::cout << "Failure reading data" << std::endl;
+		}
+
+        int read_temp = (buf[2] << 6) | (buf[3] >> 2);
+		double temperature = read_temp / 16382.0 * 165.0 - 40;
+		
+		int read_hum = (buf[0] << 10) | (buf[1] << 2);
+		read_hum = read_hum >> 2;
+		double humidity = read_hum / 16382.0 * 100.0;
 	
-		  // update ring buffers
-		  for (int i = n_ring-10; i < n_ring; i++) {
-		  buff_temp[i] = read_temp[i-(n_ring-10)];
-		  buff_pres[i] = read_pres[i-(n_ring-10)];
-		  buff_hum[i] = read_hum[i-(n_ring-10)];
-		  }
+		buff_temp[n_ring] = temperature;
+		buff_hum[n_ring] = humidity;
 		
-		  if (n_ring <= 90) {
-		  n_ring += 10;
-		  } else if (n_ring == 100) {
-		  n_ring = 10;
-		  }
+		if (n_ring < 99) {
+			n_ring += 1;
+		} else if (n_ring == 99) {
+			n_ring = 1;
+		}
 
-		  if (n_tph <=90) {
-		  n_tph += 10;
-		  }
-		*/
+		if (n_tph < 100) {
+			n_tph += 1;
+		}
+
+		flag_get = 1;
+
+		sleep(1);
 	}
-	
 }
 
 void Work::Process() {
-	// calculate averages
-	while (1) {
-		/*
-		  for (int i = 0; i < n_tph; i++) {
-		  sum_temp += buff_temp[i];
-		  sum_pres += buff_pres[i];
-		  sum_hum += buff_hum[i];
-			
-		  }
-		  ave_temp = sum_temp/n_tph;
-		  ave_pres = sum_pres/n_tph;
-		  ave_hum = sum_hum/n_tph;
+		while (1) {
+			for (int i = 0; i < n_tph; i++) {
+				sum_temp += buff_temp[i];
+				sum_hum += buff_hum[i];
+			}
+		  
+			ave_temp = sum_temp/n_tph;
+			ave_hum = sum_hum/n_tph;
 
-		  sum_temp = 0;
-		  sum_pres = 0;
-		  sum_hum = 0;
+			sum_temp = 0;
+			sum_hum = 0;
 
-		  // calculate current weather
-		  if (ave_temp > 7) {
-		  current_weather =  "good";
-		  } else {
-		  current_weather =  "bad";
-		  }
+			if (ave_temp > 10) {
+				current_weather = "good";
+			} else {
+				current_weather = "bad";
+			}
+		
+			if (current_weather == "good") {
+				message = "It's good weather, have a great day";
+			} else {
+				message = "It's bad weather, but have a great day anyway";
+			}
 
-		  // calculate message
-		  if (current_weather == "good") {
-		  message = "It's good weather, have a great day";
-		  } else {
-		  message = "It's bad weather, but have a great day anyway";
-		  }
-		*/
+			flag_process = 1;
+
+			sleep(5);
 	}
 }
 
 void Work::Write() {
-	while (1) {
-		/*
-		  std::cout << "Temperature is: " << ave_temp << std::endl;
-		  std::cout << "Pressure is: " << ave_pres << std::endl;
-		  std::cout << "Humidity is: " << ave_hum << std::endl;
-	  
-		  std::cout << "The current weather is: " << current_weather << std::endl;
-		  std::cout << "Message is: " << message << std::endl;
-		*/
+		while (1) {
+			std::cout << "Temperature is: " << ave_temp << std::endl;
+			std::cout << "Humidity is: " << ave_hum << std::endl;
+
+			std::cout << "The current weather is: " << current_weather << std::endl;
+			std::cout << message << std::endl;
+
+			sleep(5);
+
+			/*
+			  Outputs are:
+			  ave_temp (Single value)
+			  ave_hum (single value)
+			  ave_pres (single(value)
+			  current_weather (probably something like sunny, rainy, hot, stormy. Represented in the web app by icons?)
+			  message (General message to be displayed)
+			*/
 	}
 }
