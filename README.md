@@ -37,7 +37,7 @@ It is possible to configure email alerts for when a fast or large variation of t
 
 We have made a homemade board that sits right on top of the Raspberry PI, that is connected to it via the GPIO interface, and kept snuggly tight with 4 M2.5 mounting screws. A second board with the sensors is placed outside and connected to the Raspberry PI with a 10-meter long RJ45 (ethernet) cable.
 
-The I2C funcionality may have to be enabled via the following:
+The I2C funcionality may have to be enabled via the command line with the following:
 ```
 sudo raspi-config
 * go to interfacing options
