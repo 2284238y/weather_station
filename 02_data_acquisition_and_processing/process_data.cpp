@@ -17,7 +17,6 @@ double ProcessData::buff_pres[100] = {};
 double ProcessData::ave_hum = 0;
 double ProcessData::ave_temp = 0;
 double ProcessData::ave_pres = 0;
-std::string ProcessData::message = "Default";
 std::string ProcessData::hum_weather = "Default";
 std::string ProcessData::temp_weather = "Default";
 std::string ProcessData::pres_weather = "Default";
@@ -31,24 +30,21 @@ void ProcessData::run() {
 		ProcessData::Get();
     } else if (todo == "process") {
 		ProcessData::Process();
-    } else if (todo == "write") {
-		ProcessData::Write();
     }
 }
 
 //*  This method reads data from the i2c buffer
 void ProcessData::Get() {
-	//*  Initialise sensor read buffers and i2c file
+	//*  Initialise sensor buffers and i2c file
 	uint8_t buf1[4];
 	uint8_t buf2[4];
-	int file;
 
 	//*  Open the i2c bus
-	if((file = open("/dev/i2c-1", O_RDWR))< 0 ) {
+	int file;
+    if((file = open("/dev/i2c-1", O_RDWR))< 0 ) {
 	    std::cout << "cannot open bus" << std::endl;
 	};
 	
-
 	//* Start infinite Loop
 	while (1) {
 		//*  Open the temp/hum i2c sensor address
@@ -62,7 +58,7 @@ void ProcessData::Get() {
 		}
 		  
 		//*  Bit manipulation and convert to values 
-		double read_hum = (buf1[0] << 8) | buf1[1];
+		double read_hum = (buf1[0] << 6) | (buf1[1] >> 2);
 		double humidity = read_hum / 16382.0 * 100.0;
 
 		double read_temp = (buf1[2] << 6) | (buf1[3] >> 2);
@@ -88,14 +84,14 @@ void ProcessData::Get() {
 		buff_pres[n_ring] = pressure;
 
 		
-		//*  update ring buffer index being written to
+		//*  Update ring buffer index for next write
 		if (n_ring < 99) {
 			n_ring += 1;
 		} else if (n_ring == 99) {
 			n_ring = 1;
 		}
 
-		//*  Update the size of the ring buffer (for averaging calculations)
+		//*  Update the size of the ring buffer
 		if (n_tph < 100) {
 			n_tph += 1;
 		}
@@ -105,17 +101,17 @@ void ProcessData::Get() {
 	}
 }
 
-//* This method proceses the data
+//* This method proceses the data and outputs results
 void ProcessData::Process() {
 	while (1) {
-		//*  sum up the values in the buffers
+		//*  Sum up the values in the buffers
 		for (int i = 0; i < n_tph; i++) {
 			sum_hum += buff_hum[i];
 			sum_temp += buff_temp[i];
 			sum_pres += buff_pres[i];
 		}
 
-		//* Average the buffers to get an n_tph-point average
+		//*  Average the buffers to get an n_tph-point average
 		ave_hum = sum_hum/n_tph;
 		ave_temp = sum_temp/n_tph;
 		ave_pres = sum_pres/n_tph;
@@ -160,26 +156,15 @@ void ProcessData::Process() {
 
 		//*  Calculate a message based on the weather		
 		if (temp_weather == "Hot") {
-			message = "It's good weather, have a great day";
-		} else {
-			message = "It's bad weather, but have a great day anyway";
-		}
-
-		//* wait 5s until next calculation
-		sleep(5);
-	}
-}
-
-//*  This method writes the data to the database
-void ProcessData::Write() {
-	while (1) {
+			message = 
+	
 		std::cout << "Humidity: " << ave_hum <<  "%" << std::endl;
 		std::cout << "Temperature: " << ave_temp << " degrees C" << std::endl;
 		std::cout << "Pressure: " << ave_pres << " milibar" << std::endl;
 
-		std::cout << "Current weather : " << temp_weather << std::endl;
-		std::cout << message << std::endl;
+		std::cout << "Current weather: " << hum_weather, ", " << temp_weather << ", " << pres_weather <<  std::endl;
 
+        //*  Wait 5s until next iteration
 		sleep(5);
 	}
 }

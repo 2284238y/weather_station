@@ -17,7 +17,6 @@ class ProcessData : public Threads {
 	static double ave_hum;
 	static double ave_temp;
 	static double ave_pres;
-	static std::string message;
 	static std::string hum_weather;
 	static std::string temp_weather;
 	static std::string pres_weather;

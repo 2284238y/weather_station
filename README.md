@@ -36,6 +36,29 @@ It is possible to configure email alerts for when a fast or large variation of t
 ### Raspberry Pi Setup <a name="raspi"></a>
 
 We have made a homemade board that sits right on top of the Raspberry PI, that is connected to it via the GPIO interface, and kept snuggly tight with 4 M2.5 mounting screws. A second board with the sensors is placed outside and connected to the Raspberry PI with a 10-meter long RJ45 (ethernet) cable.
+
+The I2C funcionality may have to be enabled via the following:
+'''
+sudo raspi-config
+* go to interfacing options
+* go to advanced
+* go to I2C
+* select enable
+reboot
+'''
+
+Then I2C tools should be instaled with:
+'''
+sudo apt-get install -y python-smbus i2c-tools
+sudo apt-get update
+'''
+
+To identify the i2C addresses for the sensors, run the following command:
+'''
+sudo i2cdetect -y 1
+(Or sudo i2cdetect -y 0 if you connected your sensors via the alternate I2C pins)
+'''
+
 See our Twitter feed for pictures.
 @glasgoweatherpi
 https://twitter.com/glasgoweatherpi
@@ -55,12 +78,22 @@ The components are listed here:
 
 - GPIO header: all pins will be soldered to the homemade board for better stability when the homemade board is plugged into the Raspberry PI, but only 4 of the connections are live: ground, voltage, clock and data (i2c protocol).
 
-For more details on electronics, design and soldering, see the Wiki Hardware page.
+For more details on electronics, design and soldering, see the [Wiki Hardware page](wiki/Hardware).
 
 Note: See the [electronics folder](01_electronics) for pictures and downloadable circuit and CAD files.
 
 ## Installation <a name="install"></a>
 ### Data Acquisition and Data Analysis <a name="data"></a>
+Simply download the data aquisition and processing folder, navigate to the install directory on the command line and type:
+'''
+make
+'''
+
+This should output a file called 'output' to your current folder which you can run with the command:
+'''
+./output
+'''
+
 Note: See the [data acquisition/processing folder](02_data_acquisition_and_processing)
 
 
