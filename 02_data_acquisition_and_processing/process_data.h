@@ -1,13 +1,13 @@
-#ifndef WORK_H
-#define WORK_H
+#ifndef PROCESS_DATA_H
+#define PROCESS_DATA_H
 
 #include <string>
 #include "threads.h"
 
-class Work : public Threads {
+class ProcessData : public Threads {
  public:
-	Work(std::string a);
-	~Work();
+	ProcessData(std::string a);
+	~ProcessData();
 	void run() override;
  private:
 	std::string todo;
@@ -18,7 +18,9 @@ class Work : public Threads {
 	static double ave_temp;
 	static double ave_pres;
 	static std::string message;
-	static std::string current_weather;
+	static std::string hum_weather;
+	static std::string temp_weather;
+	static std::string pres_weather;
     double sum_temp = 0, sum_pres = 0, sum_hum = 0;
 	int n_tph = 1;
 	int n_ring = 0;
@@ -27,4 +29,4 @@ class Work : public Threads {
 	void Write();
 };
 
-#endif //WORK_H
+#endif //PROCESS_DATA_H

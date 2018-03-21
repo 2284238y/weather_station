@@ -1,18 +1,18 @@
 #include <cstdlib>
 #include <iostream>
-#include "work.h"
+#include "process_data.h"
 
 int main() {
-    Work get_data("get");
-    Work process_data("process");
-    Work broadcast_data("write");
+    ProcessData read_data("get");
+    ProcessData process_data("process");
+    ProcessData write_data("write");
 
-    get_data.create();
+    read_data.create();
     process_data.create();
-    broadcast_data.create();
+    write_data.create();
 
-    get_data.join();
+    read_data.join();
     process_data.join();
-    broadcast_data.join();
+    write_data.join();
 
 }
