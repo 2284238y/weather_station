@@ -78,7 +78,7 @@ The components are listed here:
 
 - GPIO header: all pins will be soldered to the homemade board for better stability when the homemade board is plugged into the Raspberry PI, but only 4 of the connections are live: ground, voltage, clock and data (i2c protocol).
 
-For more details on electronics, design and soldering, see the [Wiki Hardware page](Wiki/Hardware).
+For more details on electronics, design and soldering, see the [Wiki Hardware page](https://github.com/craigmccallum/weather_station/wiki).
 
 Note: See the [electronics folder](01_electronics) for pictures and downloadable circuit and CAD files.
 
