@@ -31,7 +31,7 @@ The web server is coded in PHP. The graphics user interface has real-time schema
 It is possible to configure email alerts for when a fast or large variation of the weather is detected.
 
 ![alt text](social_engagement/project-schematic.PNG)
-![alt text](social_engagement/flow chart.PNG)
+![alt text](https://github.com/craigmccallum/weather_station/blob/master/social_engagement/flow%20chart.png)
 
 ## Getting Started <a name="start"></a>
 ### Raspberry Pi Setup <a name="raspi"></a>
