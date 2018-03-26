@@ -1,6 +1,6 @@
 <?php
 //index.php
-$connect = mysqli_connect("localhost", "root", "EmbeddedSystemTeam2", "sensor_log");
+$connect = mysqli_connect("localhost", "root", "Your password", "sensor_log");
 
  
   $query = '
