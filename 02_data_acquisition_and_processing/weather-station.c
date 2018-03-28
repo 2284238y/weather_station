@@ -5,7 +5,6 @@ Craig McCallum - Data Acquisition and Processing
 Damir Gulamov - Web App Display
 *
 * License: free 
-*
 * 
 * Reference circuit: datasheet HIH6030
 * "Honeywell HumidIcon Digital Humidity/Temperature Sensors - HIH6000 Series"
