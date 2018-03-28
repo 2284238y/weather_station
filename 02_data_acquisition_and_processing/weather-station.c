@@ -1,5 +1,4 @@
-/** 
-*
+/** Code of the Weather station project
 * Authors: 
 Aurelie Crawford - Electronics and Social Engagement
 Craig McCallum - Data Acquisition and Processing
@@ -7,15 +6,7 @@ Damir Gulamov - Web App Display
 *
 * License: free 
 *
-* Pin connections for Raspberry Pi 3:
-*
-*   RPi2   |  Sensor
-*  ------------------
-*    01    |    8   (VDD)
-*    03    |    4   (SDA)
-*    05    |    3   (SCL)
-*    09    |    2   (GND)
-*
+* 
 * Reference circuit: datasheet HIH6030
 * "Honeywell HumidIcon Digital Humidity/Temperature Sensors - HIH6000 Series"
 https://sensing.honeywell.com/index.php?ci_id=147070
