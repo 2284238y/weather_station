@@ -1,14 +1,14 @@
 <?php
 //index.php
-$connect = mysqli_connect("localhost", "root", "password", "sensor_log");
+$connect = mysqli_connect("localhost", "root", "EmbeddedSystemTeam2", "sensor_log");
 
  
   $query = '
   SELECT sensor_value, UNIX_TIMESTAMP(timestamp) AS datetime  
   FROM table_sensor_log 
-  WHERE UNIX_TIMESTAMP(timestamp)>= '.time().'-24070 AND sensor_id = 1
+  WHERE UNIX_TIMESTAMP(timestamp)>= '.time().'-86400 AND sensor_id = 1
   ORDER BY timestamp ASC
-  LIMIT 600
+  LIMIT 6000
   '; 
  
 
@@ -97,9 +97,12 @@ if($_POST['timestamp']!=''){
  <body>
   <div class="page-wrapper">
    <br />
-   <h2 align="center">Display Google Line Chart with JSON PHP & Mysql</h2>
+   <h2 align="center">Temperature / Last 24 hours</h2>
    <div id="line_chart" style="width: 100%; height: 500px"></div>
-   <a href="http://192.168.0.23/test/humi.php">Humidity link</a>
+   <a href="http://192.168.0.23/test/weektemp.php">Last week temperature</a>
+   <a href="http://192.168.0.23/test/nowtemp.php">Last hour temperature</a>
+   <a href="http://192.168.0.23/test/humi.php">Last day Humidity </a>
+   <a href="http://192.168.0.23/test/weekhumi.php">Last week Humidity</a>
   </div>
  </body>
 </html>

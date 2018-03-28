@@ -6,9 +6,9 @@ $connect = mysqli_connect("localhost", "root", "EmbeddedSystemTeam2", "sensor_lo
   $query = '
   SELECT sensor_value, UNIX_TIMESTAMP(timestamp) AS datetime  
   FROM table_sensor_log 
-  WHERE UNIX_TIMESTAMP(timestamp)>= '.time().'-86400 AND sensor_id = 2
+  WHERE UNIX_TIMESTAMP(timestamp)>= '.time().'-3600 AND sensor_id = 1
   ORDER BY timestamp ASC
-  LIMIT 4000
+  LIMIT 1000
   '; 
  
 
@@ -22,7 +22,7 @@ $table['cols'] = array(
   'type' => 'datetime'
  ),
  array(
-  'label' => 'Humidity (%)', 
+  'label' => 'Temperature (°C)', 
   'type' => 'number'
  )
 );
@@ -66,7 +66,7 @@ if($_POST['timestamp']!=''){
     window.data = new google.visualization.DataTable(<?php echo $jsonTable; ?>);
 
     window.options = {
-     title:'Humidity, %',
+     title:'Temperature (°C)',
      legend:{position:'bottom'},
      chartArea:{width:'95%', height:'65%'}
     };
@@ -97,11 +97,11 @@ if($_POST['timestamp']!=''){
  <body>
   <div class="page-wrapper">
    <br />
-   <h2 align="center">Humidity / Last 24 hours</h2>
+   <h2 align="center">Temperature / Last 60 minutes</h2>
    <div id="line_chart" style="width: 100%; height: 500px"></div>
-   <a href="http://192.168.0.23/test/index.php">Last day Temperature</a>
-   <a href="http://192.168.0.23/test/weektemp.php">Lask week temperature</a>
-   <a href="http://192.168.0.23/test/weekhumi.php">Lask week Humidity</a>
+   <a href="http://192.168.0.23/test/weektemp.php">Last week temperature</a>
+   <a href="http://192.168.0.23/test/humi.php">Last day Humidity </a>
+   <a href="http://192.168.0.23/test/weekhumi.php">Last week Humidity</a>
   </div>
  </body>
 </html>
