@@ -100,6 +100,7 @@ Note: See the [data acquisition/processing folder](02_data_acquisition_and_proce
 
 ### Web App <a name="web"></a>
 Note: See the [web app folder](03_web_app)
+More detailed installation instructions can be found in Wiki of the project
 
 ## Social engagement <a name="social"></a>
 ### Twitter
