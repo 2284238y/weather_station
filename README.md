@@ -92,7 +92,7 @@ make
 
 This should output a file called 'output' to your current folder which you can run with the command:
 ```
-./output
+./weather-station
 ```
 
 Note: See the [data acquisition/processing folder](02_data_acquisition_and_processing)
