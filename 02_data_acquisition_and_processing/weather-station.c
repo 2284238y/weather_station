@@ -1,4 +1,4 @@
-/** Example c code for accessing Honeywell temperature+humidity sensors
+/** 
 *
 * Authors: 
 Aurelie Crawford - Electronics and Social Engagement
